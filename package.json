@@ -1,0 +1,22 @@
+{
+  "name": "bostonhacks",
+  "version": "1.0.0",
+  "description": "But Why",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suzannex/butwhy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suzannex/butwhy/issues"
+  },
+  "homepage": "https://github.com/suzannex/butwhy#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
