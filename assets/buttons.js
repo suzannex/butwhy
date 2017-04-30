@@ -138,6 +138,7 @@
                             console.log($('#' + currentButton.id + ' .bttnio-cell span'))
                             $('#' + currentButton.id + ' .bttnio-cell span').text(currentButton.captionFn(currentButton.label_text));
                             console.log(currentButton.captionFn(currentButton.label_text))
+                            alert(currentButton.captionFn(currentButton.label_text))
                             //button.button.preview.label_text = currentButton.captionFn(currentButton.label_text);
                         }
                     }
