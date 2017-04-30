@@ -78,9 +78,8 @@
 			captionFn : function(music) {return "Check out " + music + " on iTunes!!";}
 		},
         ticketmaster : {
-            itunes : {
-            id : 'itunes-button',
-            btn_id : 'btn-5de6d93abecc3fc3',
+            id : 'ticketmaster-button',
+            btn_id : 'btn-4e3bbaaa65fb4072',
             context : {
                 subject_location: {
                     identifiers: {
