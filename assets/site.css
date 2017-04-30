@@ -9,6 +9,8 @@ body {
 
 #logo{
 	margin:auto;
+	width:80%;
+	margin-left: 10%;
 }
 
 #intro-msg{
