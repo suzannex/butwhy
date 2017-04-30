@@ -77,6 +77,20 @@
             label_text: '',
 			captionFn : function(music) {return "Check out " + music + " on iTunes!!";}
 		},
+        ticketmaster : {
+            itunes : {
+            id : 'itunes-button',
+            btn_id : 'btn-5de6d93abecc3fc3',
+            context : {
+                subject_location: {
+                    identifiers: {
+                        ticketmaster: ''
+                    }
+                }
+            },
+            label_text: '',
+            captionFn : function(music) {return "Buy tickets for " + music + "!!";}
+        }
 	};
 
 	$(document).ready(function() {
@@ -96,6 +110,7 @@
 	        e.preventDefault();
 
 	        var inputText = textInput.val();
+            if (!inputText) return;
 	        //console.log(inputText);
 	        updateButtons(inputText);
 
@@ -114,6 +129,9 @@
         
         buttons.delivery.context.subject_location.identifiers.deliverydotcom = Math.floor(Math.random() * 100000);
         $('#deliverycom-button').attr('data-bttnio-context', JSON.stringify(buttons.delivery.context));
+
+        buttons.ticketmaster.context.subject_location.identifiers.ticketmaster = Math.floor(Math.random() * 10000);
+        $('#ticketmaster-button').attr('data-bttnio-context', JSON.stringify(buttons.ticketmaster.context));
 
 	    // once all the requests have come in, update all the button contexts
 
@@ -242,6 +260,20 @@
     }
 
     function jetSearch(searchText) {
+        $.get('/searchJet/', searchText, function(productId, status) {
+            console.log(status)
+            if (status === 'ok') {
+                console.log(productId)
+                buttons.jet.context.item.identifiers.jet = productId;
+                buttons.jet.label_text = productId;
+                $('#jet-button').attr('data-bttnio-context', JSON.stringify(buttons.jet.context));
+                bttnio('refresh', function(success, actions) {
+                    if (success) {
+                        $('#jet-button .bttnio-cell span').text(buttons.jet.captionFn(buttons.jet.label_text));
+                    }
+                });
+            }
+        })
 
 
         /*$.ajax({
