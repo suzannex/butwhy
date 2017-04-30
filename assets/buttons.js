@@ -151,8 +151,8 @@
 	}
 
 	function updateUberContext(latitude, longitude, placeName) {
-		buttons.uber.context.latitude = latitude;
-		buttons.uber.context.longitude = longitude;
+		buttons.uber.context.subject_location.latitude = latitude;
+		buttons.uber.context.subject_location.longitude = longitude;
         buttons.uber.label_text = placeName;
 		//textInput.val(buttons.uber.captionFn(placeName));
 	}
