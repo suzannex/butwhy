@@ -127,7 +127,7 @@
 	  	var toLog = results.length >= 0 ? results[0] : results.length;
 	    console.log(toLog);
 
-        $('#uber-button').attr('data-bttnio-context', buttons.uber.context); 
+        $('#uber-button').attr('data-bttnio-context', JSON.stringify(buttons.uber.context)); 
         bttnio('refresh', function(success, actions) {
             if (success) {
                 console.log(actions);
