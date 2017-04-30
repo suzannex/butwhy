@@ -1,10 +1,19 @@
 (function() {
 	var textInput, mapsSearchResult, service, map;
+    var GEORGE_LAT = 42.3509178,
+        GEORGE_LNG = -71.111145;
 
+    // default context values
 	var buttons = {
 		uber : {
 			id : 'uber',
-			context : {},
+			context : {
+                user_location: {
+                    latitude: GEORGE_LAT,
+                    longitude: GEORGE_LNG
+                },
+                subject_location: {}
+            },
 			captionFn : function(loc) {return "Uber to " + loc + "! Good luck getting back!";}
 		},
 		drizly : {
@@ -50,6 +59,14 @@
 	    // other actions to come
 
 	    // once all the requests have come in, update all the button contexts
+        $('#uber').attr('data-bttnio-context', buttons.uber.context); 
+        bttnio('refresh', function(success, buttons) {
+            if (success) {
+                console.log(buttons);
+            } else {
+                console.log("Failed to refresh");
+            }
+        }) 
 
 	}
 
@@ -58,8 +75,7 @@
 	window.initMap = function() {
 		//console.log('initMap ready');
 		//console.log(google);
-
-		var george = new google.maps.LatLng(42.3509178,-71.111145); // current location
+        var george = new google.maps.LatLng(GEORGE_LAT,GEORGE_LNG); // current location 
 
 		map = new google.maps.Map(document.getElementById('map'), {
 	    	center: george,
@@ -72,7 +88,7 @@
 
 	function googleMapsSearch(searchText) {
 		//service = new google.maps.places.PlacesService(map);
-		service.textSearch(createRequest(searchText), callback);
+		service.textSearch(createRequest(searchText), updateContextAfterMapSearch);
 	}
 
 	function createRequest(searchText) {
@@ -84,7 +100,7 @@
 		};
 	}
 
-	function callback(results, status) {
+	function updateContextAfterMapSearch(results, status) {
 	  if (status == google.maps.places.PlacesServiceStatus.OK) {
 	  	if(results.length >= 0) {
 	  		mapSearchResult = results[0];
