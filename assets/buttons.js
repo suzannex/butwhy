@@ -4,23 +4,28 @@
 	var buttons = {
 		uber : {
 			id : 'uber',
-			context : {}
+			context : {},
+			captionFn : function(loc) {return "Uber to " + loc + "! Good luck getting back!";}
 		},
 		drizly : {
 			id : 'drizly',
-			context : {}
+			context : {},
+			captionFn : function(alc) {return "Get CRUNK.... order " + alc + " on Drizly!";}
 		},
 		jet : {
 			id : 'jet',
-			context : {}
+			context : {},
+			captionFn : function(txt) {return "Use Jet to get " + txt + "!";}
 		},
 		delivery : {
 			id : 'delivery',
-			context : {}
+			context : {},
+			captionFn : function(item) {return "Get " + item + " delivered with Delivery!";}
 		},
 		itunes : {
 			id : 'itunes',
-			context : {}
+			context : {},
+			captionFn : function(music) {return "Check out " + music + " on iTunes!!";}
 		},
 	};
 
@@ -84,16 +89,18 @@
 	  	if(results.length >= 0) {
 	  		mapSearchResult = results[0];
 	  		updateUberContext(mapSearchResult.geometry.location.lat, 
-	  						 mapSearchResult.geometry.location.lng);
+	  						 mapSearchResult.geometry.location.lng,
+	  						 mapSearchResult.name);
 	  	}
 	  	var toLog = results.length >= 0 ? results[0] : results.length;
 	    console.log(toLog);
 	  }
 	}
 
-	function updateUberContext(latitude, longitude) {
+	function updateUberContext(latitude, longitude, placeName) {
 		buttons.uber.context.latitude = latitude;
 		buttons.uber.context.longitude = longitude;
+		//textInput.val(buttons.uber.captionFn(placeName));
 	}
 
 	// 
