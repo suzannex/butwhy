@@ -60,7 +60,6 @@
 	    $('#inspiration-form').on('submit', function(e) {
 	    	// prevent page reload
 	        e.preventDefault();
-            alert('submit')
 
 	        var inputText = textInput.val();
 	        //console.log(inputText);
@@ -139,7 +138,6 @@
                             console.log($('#' + currentButton.id + ' .bttnio-cell span'))
                             $('#' + currentButton.id + ' .bttnio-cell span').text(currentButton.captionFn(currentButton.label_text));
                             console.log(currentButton.captionFn(currentButton.label_text))
-                            alert(currentButton.captionFn(currentButton.label_text))
                             //button.button.preview.label_text = currentButton.captionFn(currentButton.label_text);
                         }
                     }
