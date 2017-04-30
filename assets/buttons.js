@@ -1,3 +1,8 @@
+function initMap() {
+	service = new google.maps.places.PlacesService(map);
+	service.textSearch(createRequest('coffee'), callback);
+}
+
 var george = new google.maps.LatLng(42.3509178,-71.111145);
 
 $(document).ready(function() {
