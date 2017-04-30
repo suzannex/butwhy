@@ -91,7 +91,7 @@
             label_text: '',
             captionFn : function(music) {return "Buy tickets for " + music + "!!";}
         }
-	};
+	}
 
 	$(document).ready(function() {
         documentIsReady = true;
