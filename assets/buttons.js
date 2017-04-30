@@ -103,7 +103,7 @@
 		//textInput.val(buttons.uber.captionFn(placeName));
 	}
 
-	// 
+
 })();
 
 
