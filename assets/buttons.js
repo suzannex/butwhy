@@ -120,8 +120,8 @@
 	  if (status == google.maps.places.PlacesServiceStatus.OK) {
 	  	if(results.length >= 0) {
 	  		mapSearchResult = results[0];
-	  		updateUberContext(mapSearchResult.geometry.location.lat, 
-	  						 mapSearchResult.geometry.location.lng,
+	  		updateUberContext(mapSearchResult.geometry.location.lat(), 
+	  						 mapSearchResult.geometry.location.lng(),
 	  						 mapSearchResult.name);
 	  	}
 	  	var toLog = results.length >= 0 ? results[0] : results.length;
