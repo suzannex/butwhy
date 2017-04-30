@@ -24,14 +24,25 @@
 		drizly : {
 			id : 'drizly-button',
             btn_id : 'btn-4bd35bca12181d57',
-			context : {},
+			context : {
+                subject_location: {
+                    latitude: GEORGE_LAT,
+                    longitude: GEORGE_LNG
+                }
+            },
             label_text: '',
 			captionFn : function(alc) {return "Get CRUNK.... order " + alc + " on Drizly!";}
 		},
 		jet : {
 			id : 'jet-button',
             btn_id : 'btn-1022822d571cf465',
-			context : {},
+			context : {
+                item: {
+                    identifiers: {
+                        jet: ''
+                    }
+                }
+            },
             label_text: '',
 			captionFn : function(txt) {return "Use Jet to get " + txt + "!";}
 		},
@@ -56,7 +67,13 @@
 		itunes : {
 			id : 'itunes-button',
             btn_id : 'btn-5de6d93abecc3fc3',
-			context : {},
+			context : {
+                artist: {
+                    identifiers: {
+                        itunes: ''
+                    }
+                }
+            },
             label_text: '',
 			captionFn : function(music) {return "Check out " + music + " on iTunes!!";}
 		},
@@ -88,7 +105,11 @@
 	});
 
 	function updateButtons(searchText) {
-	    googleMapsSearch(searchText); // handle uber
+	    googleMapsSearch(searchText); // handle map stuff
+        itunesSearch(searchText);
+
+        jetSearch(searchText);
+
 	    // other actions to come
         
         buttons.delivery.context.subject_location.identifiers.deliverydotcom = Math.floor(Math.random() * 100000);
@@ -181,9 +202,71 @@
         buttons.delivery.context.user_location.name = placeName;
         buttons.delivery.label_text = placeName;
         $('#deliverycom-button').attr('data-bttnio-context', JSON.stringify(buttons.delivery.context));
+
+        //Drizly
+        buttons.drizly.context.subject_location.latitude = latitude;
+        buttons.drizly.context.subject_location.longitude = longitude;
+        buttons.uber.label_text = placeName;
+        $('#drizly-button').attr('data-bttnio-context', JSON.stringify(buttons.drizly.context));
 	}
 
-	// 
+    // --------------------iTunes : get artist ID ----------------------------
+
+    function itunesSearch(searchText) {
+        addScript('https://itunes.apple.com/search?term=' 
+            + searchText 
+            + '&media=music&entity=musicArtist&limit=1&callback=updateItunesButton', 
+            updateItunesButton);
+    }
+
+    window.updateItunesButton = function(result) {
+        var artistName, artistId;
+        artistName = result.results[0].artistName;
+        artistId = result.results[0].artistId;
+        console.log(artistName);
+
+        buttons.itunes.context.artist.identifiers.itunes = artistId;
+        buttons.itunes.label_text = artistName;
+        $('#itunes-button').attr('data-bttnio-context', JSON.stringify(buttons.itunes.context));
+        bttnio('refresh', function(success, actions) {
+            if (success) {
+                $('#itunes-button .bttnio-cell span').text(buttons.itunes.captionFn(buttons.itunes.label_text));
+            }
+        })
+    }
+
+    function addScript(src, callback) {
+        var s = document.createElement( 'script' );
+        s.setAttribute( 'src', src );
+        document.body.appendChild( s );
+    }
+
+    function jetSearch(searchText) {
+
+
+        /*$.ajax({
+            type: 'GET',
+            url: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22https%3A%2F%2Fjet.com%2Fsearch%3Fterm%3Dcoffee%22&format=json",
+            //url: "https://jet.com/search?term=" + searchText,
+            dataType: 'text',
+            success: function(data) {
+                console.log(data)
+                var elements = $(data).find('.list-products li');
+                var firstProduct = elements.first().find('.product-tiles');
+                var productId = firstProduct.attr('data-sku');
+                console.log("id: " + productId)
+
+                buttons.jet.context.item.identifiers.jet = productId;
+                buttons.jet.label_text = productId;
+                $('#jet-button').attr('data-bttnio-context', JSON.stringify(buttons.jet.context));
+                bttnio('refresh', function(success, actions) {
+                    if (success) {
+                        $('#jet-button .bttnio-cell span').text(buttons.jet.captionFn(buttons.jet.label_text));
+                    }
+                });
+            }
+        });*/
+    }
 })();
 
 
