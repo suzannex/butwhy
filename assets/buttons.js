@@ -38,7 +38,18 @@
 		delivery : {
 			id : 'deliverycom-button',
             btn_id : 'btn-4029504a709ce5df',
-			context : {},
+			context : {
+                subject_location: {
+                    city: "Boston",
+                    identifiers: {
+                        deliverydotcom: 0
+                    }
+                },
+                user_location: {
+                    latitude: GEORGE_LAT,
+                    longitude: GEORGE_LNG
+                }
+            },
             label_text: '',
 			captionFn : function(item) {return "Get " + item + " delivered with Delivery!";}
 		},
@@ -54,6 +65,12 @@
 	$(document).ready(function() {
         documentIsReady = true;
         initializeMapIfReady();
+
+        for (var key in buttons) {
+            var currentButton = buttons[key];
+            $('#' + currentButton.id).attr('data-bttnio-context', JSON.stringify(currentButton.context));
+            bttnio('refresh');
+        }
 
 		textInput = $('#inspiration-input');
 		//console.log('doc ready');
@@ -73,6 +90,9 @@
 	function updateButtons(searchText) {
 	    googleMapsSearch(searchText); // handle uber
 	    // other actions to come
+        
+        buttons.delivery.context.subject_location.identifiers.deliverydotcom = Math.floor(Math.random() * 100000);
+        $('#deliverycom-button').attr('data-bttnio-context', JSON.stringify(buttons.delivery.context));
 
 	    // once all the requests have come in, update all the button contexts
 
@@ -120,14 +140,13 @@
 	  if (status == google.maps.places.PlacesServiceStatus.OK) {
 	  	if(results.length >= 0) {
 	  		mapSearchResult = results[0];
-	  		updateUberContext(mapSearchResult.geometry.location.lat(), 
+	  		updateMapContexts(mapSearchResult.geometry.location.lat(), 
 	  						 mapSearchResult.geometry.location.lng(),
 	  						 mapSearchResult.name);
 	  	}
 	  	var toLog = results.length >= 0 ? results[0] : results.length;
 	    console.log(toLog);
 
-        $('#uber-button').attr('data-bttnio-context', JSON.stringify(buttons.uber.context)); 
         bttnio('refresh', function(success, actions) {
             if (success) {
                 console.log(actions);
@@ -138,23 +157,30 @@
                             console.log($('#' + currentButton.id + ' .bttnio-cell span'))
                             $('#' + currentButton.id + ' .bttnio-cell span').text(currentButton.captionFn(currentButton.label_text));
                             console.log(currentButton.captionFn(currentButton.label_text))
-                            //button.button.preview.label_text = currentButton.captionFn(currentButton.label_text);
                         }
                     }
                 })
             } else {
                 console.log("Failed to refresh");
             }
-        }) 
+        }); 
 
 	  }
 	}
 
-	function updateUberContext(latitude, longitude, placeName) {
+	function updateMapContexts(latitude, longitude, placeName) {
+        //Uber
 		buttons.uber.context.subject_location.latitude = latitude;
 		buttons.uber.context.subject_location.longitude = longitude;
         buttons.uber.label_text = placeName;
-		//textInput.val(buttons.uber.captionFn(placeName));
+        $('#uber-button').attr('data-bttnio-context', JSON.stringify(buttons.uber.context));
+
+        //Delivery.com
+        buttons.delivery.context.user_location.latitude = latitude;
+        buttons.delivery.context.user_location.longitude = longitude;
+        buttons.delivery.context.user_location.name = placeName;
+        buttons.delivery.label_text = placeName;
+        $('#deliverycom-button').attr('data-bttnio-context', JSON.stringify(buttons.delivery.context));
 	}
 
 	// 
