@@ -60,6 +60,7 @@
 	    $('#inspiration-form').on('submit', function(e) {
 	    	// prevent page reload
 	        e.preventDefault();
+            alert('submit')
 
 	        var inputText = textInput.val();
 	        //console.log(inputText);
