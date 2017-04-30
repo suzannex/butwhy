@@ -9,17 +9,23 @@
 
   <script type="text/javascript" src="/assets/buttons.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="/assets/site.css">
+
 </head>
 <body>
   <div id="map" style="visibility:hidden;"></div>
 	<div id="logoDiv">
-		<img src="/assets/logo.png" width="500px" style="align:center;">
+		<img id="logo" src="/assets/logo.png" width="100%">
+    <div id="intro-msg">Let's put these buttons to good use.</div>
 	</div>
 
-	<div>
+	<div id="inspiration-div">
 		<form id="inspiration-form">
-  			Enter some inspiration: <input type="text" id="inspiration-input"><br>
-  			<input id="textfield" type="submit" value="But why">
+        <div id="inspiration-text">Enter some inspiration... </div>
+  			<input type="text" id="inspiration-input" placeholder="inspiration here"><br>
+        <div id="submitBtnWrap">
+          <input id="textfield" type="submit" value="Go">
+        </div>
 		</form>
 	</div>
 
@@ -65,6 +71,10 @@
     <!-- Resy button -->
     <div id="resy-button" data-bttnio-id="btn-69a92b541453ec1e"
        data-bttnio-context='{ "user_location": { "latitude": 25.782324, "longitude": -80.2310801 } }'></div>
+  </div>
+
+  <div id="sponsor">
+    Powered by <a href="https://www.usebutton.com/">Button</a>
   </div>
 
   <script>
